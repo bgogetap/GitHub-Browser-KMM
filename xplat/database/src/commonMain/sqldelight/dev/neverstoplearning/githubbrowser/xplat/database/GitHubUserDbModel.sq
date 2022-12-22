@@ -1,0 +1,37 @@
+CREATE TABLE GitHubUserDbModel (
+    id INTEGER NOT NULL UNIQUE,
+    username TEXT NOT NULL,
+    avatarUrl TEXT NOT NULL,
+    timestamp INTEGER NOT NULL
+);
+
+getUserForId:
+SELECT *
+FROM GitHubUserDbModel
+WHERE id = :id
+LIMIT 1;
+
+userUpdatedTime:
+SELECT timestamp FROM GitHubUserDbModel
+WHERE id = :userId;
+
+addOrUpdateUser {
+    UPDATE GitHubUserDbModel
+    SET username = :username,
+        avatarUrl = :avatarUrl,
+        timestamp = :timestamp
+    WHERE id = :id;
+
+    INSERT OR IGNORE INTO GitHubUserDbModel(
+        id,
+        username,
+        avatarUrl,
+        timestamp
+    )
+    VALUES(
+        :id,
+        :username,
+        :avatarUrl,
+        :timestamp
+    );
+}

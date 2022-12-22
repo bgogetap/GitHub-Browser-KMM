@@ -1,0 +1,16 @@
+PODS:
+  - githubbrowserframework (1.0-SNAPSHOT)
+
+DEPENDENCIES:
+  - githubbrowserframework (from `../githubbrowserframework`)
+
+EXTERNAL SOURCES:
+  githubbrowserframework:
+    :path: "../githubbrowserframework"
+
+SPEC CHECKSUMS:
+  githubbrowserframework: 461e1388428a46605c41c34faf47376ca8df041a
+
+PODFILE CHECKSUM: e8e7448d34065ccd897987a2af2f457a4f40942d
+
+COCOAPODS: 1.11.3

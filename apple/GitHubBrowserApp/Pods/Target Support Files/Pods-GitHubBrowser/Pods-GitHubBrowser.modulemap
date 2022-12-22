@@ -1,0 +1,6 @@
+framework module Pods_GitHubBrowser {
+  umbrella header "Pods-GitHubBrowser-umbrella.h"
+
+  export *
+  module * { export * }
+}

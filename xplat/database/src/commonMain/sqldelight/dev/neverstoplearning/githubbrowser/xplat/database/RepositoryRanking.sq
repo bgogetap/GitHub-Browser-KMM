@@ -1,0 +1,24 @@
+CREATE TABLE RepositoryRanking (
+    rank INTEGER AS Int NOT NULL UNIQUE,
+    repositoryId INTEGER NOT NULL
+);
+
+addOrUpdateRepositoryRank {
+    UPDATE RepositoryRanking
+    SET repositoryId = :repositoryId
+    WHERE rank = :rank;
+
+    INSERT OR IGNORE INTO RepositoryRanking(
+        rank,
+        repositoryId
+    )
+    VALUES(
+        :rank,
+        :repositoryId
+    );
+}
+
+getRepositoryRanks:
+SELECT *
+FROM RepositoryRanking
+ORDER BY rank ASC;

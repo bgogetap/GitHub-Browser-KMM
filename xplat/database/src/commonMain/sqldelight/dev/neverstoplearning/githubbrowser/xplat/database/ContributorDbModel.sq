@@ -1,0 +1,39 @@
+CREATE TABLE ContributorDbModel (
+    repoId INTEGER NOT NULL,
+    userId INTEGER NOT NULL,
+    contributionCount INTEGER AS Int NOT NULL,
+    UNIQUE(repoId, userId)
+);
+
+addOrUpdateContributorForRepo {
+    UPDATE ContributorDbModel
+    SET contributionCount = :contributionCount
+    WHERE repoId = :repoId AND userId = :userId;
+
+    INSERT OR IGNORE INTO ContributorDbModel(
+        repoId,
+        userId,
+        contributionCount
+    )
+    VALUES(
+        :repoId,
+        :userId,
+        :contributionCount
+    );
+}
+
+getContributorsForRepo:
+SELECT
+    c.userId,
+    c.repoId,
+    c.contributionCount,
+    u.avatarUrl,
+    u.username
+FROM ContributorDbModel AS c
+INNER JOIN GitHubUserDbModel AS u ON u.id = c.userId
+WHERE c.repoId = :repoId
+ORDER BY contributionCount DESC;
+
+deleteContributorsForRepo:
+DELETE FROM ContributorDbModel
+WHERE repoId = :repoId AND userId NOT IN :userIds;

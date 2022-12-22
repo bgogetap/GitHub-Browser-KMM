@@ -1,0 +1,5 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="repo_item_star_icon_content_description">Star Count Icon</string>
+    <string name="repo_item_fork_count_icon_content_description">Fork Count Icon</string>
+</resources>

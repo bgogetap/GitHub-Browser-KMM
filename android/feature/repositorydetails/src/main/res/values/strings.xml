@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="contribution_count_label">Contributions:</string>
+    <string name="contributors_section_label">Contributors</string>
+
+    <string name="repo_owner_avatar_image_content_description">Avatar for repository owner %1$s</string>
+    <string name="user_avatar_image_content_description">Avatar for user %1$s</string>
+</resources>

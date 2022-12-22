@@ -1,0 +1,89 @@
+CREATE TABLE GitHubRepositoryDbModel (
+    id INTEGER NOT NULL UNIQUE,
+    name TEXT NOT NULL,
+    fullName TEXT NOT NULL,
+    description TEXT,
+    ownerId INTEGER NOT NULL,
+    starCount INTEGER AS Int NOT NULL,
+    forkCount INTEGER AS Int NOT NULL,
+    repositoryCreatedDate TEXT NOT NULL,
+    repositoryUpdatedDate TEXT NOT NULL,
+    timestamp INTEGER NOT NULL
+);
+
+addOrUpdateRepository {
+    UPDATE GitHubRepositoryDbModel
+    SET name = :name,
+        fullName = :fullName,
+        description = :description,
+        ownerId = :ownerId,
+        starCount = :starCount,
+        forkCount = :forkCount,
+        repositoryCreatedDate = :repositoryCreatedDate,
+        repositoryUpdatedDate = :repositoryUpdatedDate,
+        timestamp = :timestamp
+    WHERE id = :id;
+
+    INSERT OR IGNORE INTO GitHubRepositoryDbModel(
+        id,
+        name,
+        fullName,
+        description,
+        ownerId,
+        starCount,
+        forkCount,
+        repositoryCreatedDate,
+        repositoryUpdatedDate,
+        timestamp
+    )
+    VALUES(
+    :id,
+    :name,
+    :fullName,
+    :description,
+    :ownerId,
+    :starCount,
+    :forkCount,
+    :repositoryCreatedDate,
+    :repositoryUpdatedDate,
+    :timestamp
+    );
+}
+
+repositoriesWithRankAndOwner:
+SELECT
+    repo.id,
+    repo.name,
+    repo.description,
+    repo.ownerId,
+    repo.starCount,
+    repo.forkCount,
+    repo.repositoryCreatedDate,
+    repo.repositoryUpdatedDate,
+    repo.timestamp,
+    ranking.rank,
+    user.id AS userId,
+    user.username,
+    user.avatarUrl
+FROM GitHubRepositoryDbModel AS repo
+INNER JOIN RepositoryRanking AS ranking ON repositoryId = repo.id
+INNER JOIN GitHubUserDbModel AS user ON user.id = ownerId;
+
+repositoryWithOwnerInfo:
+SELECT
+    repo.id,
+    repo.name,
+    repo.fullName,
+    repo.description,
+    repo.ownerId,
+    repo.starCount,
+    repo.forkCount,
+    repo.repositoryCreatedDate,
+    repo.repositoryUpdatedDate,
+    repo.timestamp,
+    user.username,
+    user.avatarUrl
+FROM GitHubRepositoryDbModel AS repo
+INNER JOIN GitHubUserDbModel AS user ON user.id = ownerId
+WHERE repo.id = :repositoryId
+LIMIT 1;
