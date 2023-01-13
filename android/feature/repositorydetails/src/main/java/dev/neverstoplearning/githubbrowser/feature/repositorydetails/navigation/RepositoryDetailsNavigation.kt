@@ -17,7 +17,7 @@ fun NavController.navigateToRepoDetails(repoId: Long, navOptions: NavOptions? = 
     navigate(buildRoute(repoId), navOptions)
 }
 
-fun NavGraphBuilder.RepositoryDetailsScreen() {
+fun NavGraphBuilder.repositoryDetailsScreen() {
     composable(
         route = "$baseRoute/{$repoIdArg}",
         arguments = listOf(navArgument(repoIdArg) { type = NavType.LongType })

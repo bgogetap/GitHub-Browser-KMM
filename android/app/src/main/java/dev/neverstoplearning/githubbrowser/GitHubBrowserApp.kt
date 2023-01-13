@@ -10,7 +10,7 @@ import androidx.navigation.compose.rememberNavController
 import dev.neverstoplearning.githubbrowser.feature.home.navigation.homeNavigationRoute
 import dev.neverstoplearning.githubbrowser.feature.home.navigation.homeScreen
 import dev.neverstoplearning.githubbrowser.feature.repositorydetails.navigation.navigateToRepoDetails
-import dev.neverstoplearning.githubbrowser.feature.repositorydetails.navigation.RepositoryDetailsScreen
+import dev.neverstoplearning.githubbrowser.feature.repositorydetails.navigation.repositoryDetailsScreen
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
@@ -28,7 +28,7 @@ fun GitHubBrowserApp() {
                 navController.navigateToRepoDetails(repoId)
             }
             homeScreen(onRepoSelected)
-            RepositoryDetailsScreen()
+            repositoryDetailsScreen()
         }
     }
 }
