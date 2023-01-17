@@ -1,3 +1,5 @@
+import org.jetbrains.kotlin.gradle.plugin.mpp.NativeBuildType
+
 plugins {
     kotlin("multiplatform")
     id("com.android.library")
@@ -14,7 +16,11 @@ kotlin {
             }
         }
     }
-    ios()
+    ios {
+        binaries {
+                findTest(NativeBuildType.DEBUG)?.linkerOpts("-lsqlite3")
+        }
+    }
     sourceSets {
         val commonMain by getting {
             dependencies {
