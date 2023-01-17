@@ -235,6 +235,7 @@ object Deps {
         const val runtime = "com.squareup.sqldelight:runtime:_"
         const val androidDriver = "com.squareup.sqldelight:android-driver:_"
         const val nativeDriver = "com.squareup.sqldelight:native-driver:_"
+        const val sqliteDriver = "com.squareup.sqldelight:sqlite-driver:_"
         const val coroutines =
             "com.squareup.sqldelight:coroutines-extensions-jvm:_"
         const val coroutinescore = "com.squareup.sqldelight:coroutines-extensions:_"

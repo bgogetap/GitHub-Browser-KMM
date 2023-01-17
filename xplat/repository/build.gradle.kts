@@ -29,6 +29,9 @@ kotlin {
         }
         val commonTest by getting {
             dependencies {
+                implementation(projects.xplat.database.testutil)
+
+                implementation(Deps.Kotlin.coroutinestest)
                 implementation(kotlin("test-common", Versions.kotlin))
                 implementation(kotlin("test-annotations-common", Versions.kotlin))
             }
