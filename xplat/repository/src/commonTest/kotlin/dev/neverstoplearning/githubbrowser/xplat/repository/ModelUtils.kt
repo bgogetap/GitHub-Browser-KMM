@@ -1,5 +1,6 @@
 package dev.neverstoplearning.githubbrowser.xplat.repository
 
+import dev.neverstoplearning.githubbrowser.xplat.githubapi.model.ContributorApiModel
 import dev.neverstoplearning.githubbrowser.xplat.githubapi.model.RepoApiModel
 import dev.neverstoplearning.githubbrowser.xplat.githubapi.model.UserApiModel
 
@@ -42,5 +43,19 @@ fun createUserApiModel(
         id = id,
         login = login,
         avatarUrl = avatarUrl
+    )
+}
+
+fun createContributorApiModel(
+    id: Long = 2L,
+    login: String = "$id",
+    avatarUrl: String = "https://my.profile/image$id.jpg",
+    contributions: Int = 1
+): ContributorApiModel {
+    return ContributorApiModel(
+        id = id,
+        login = login,
+        avatarUrl = avatarUrl,
+        contributions
     )
 }

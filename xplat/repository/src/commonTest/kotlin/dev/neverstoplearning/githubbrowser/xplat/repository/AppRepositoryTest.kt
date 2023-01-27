@@ -1,5 +1,6 @@
 package dev.neverstoplearning.githubbrowser.xplat.repository
 
+import dev.neverstoplearning.githubbrowser.xplat.appmodels.Contributor
 import dev.neverstoplearning.githubbrowser.xplat.appmodels.GitHubRepository
 import dev.neverstoplearning.githubbrowser.xplat.appmodels.RankedGitHubRepository
 import dev.neverstoplearning.githubbrowser.xplat.appmodels.User
@@ -55,6 +56,34 @@ class AppRepositoryTest {
         val fetchedRepoTwo = appRepository.getRepository(repoApiModelTwo.id).first()
         val expectedFetchedRepoTwo = repoApiModelTwo.toGitHubRepository()
         assertEquals(expectedFetchedRepoTwo, fetchedRepoTwo)
+    }
+
+    @Test
+    fun `getContributors`() = runBlocking {
+        val repoApiModelOne = createRepoApiModel()
+
+        gitHubApi.topRepositories = listOf(repoApiModelOne)
+        val contributorApiModels = listOf(
+            createContributorApiModel(id = 3L),
+            createContributorApiModel(id = 4L)
+        )
+        gitHubApi.addContributors(repoApiModelOne.fullName, contributorApiModels)
+
+        initRepository()
+
+        val contributors = appRepository.getContributorsForRepository(repoApiModelOne.id)
+        testDispatcher.scheduler.runCurrent()
+
+        val contributorsResult = contributors.first()
+        assertEquals(contributorsResult, contributorApiModels.map { apiModel ->
+            Contributor(
+                user = User(
+                    id = apiModel.id,
+                    username = apiModel.login,
+                    avatarUrl = apiModel.avatarUrl
+                ), contributionCount = apiModel.contributions
+            )
+        })
     }
 
     private fun RepoApiModel.toGitHubRepository(): GitHubRepository {
